@@ -8,13 +8,13 @@ Purpose: What has been tested, how, and the results. Targets are in README (reso
 
 | ID | Test | Where run | Result | Date |
 |---|---|---|---|---|
-| AT-01 | 24 unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed | 2026-11-17 |
-| AT-02 | Windows type check and clippy (`cargo clippy --target x86_64-pc-windows-msvc`) | Linux cloud workspace | No errors, no warnings | 2026-11-17 |
-| AT-03 | Unit tests on Windows (`cargo test`) | maintainer's laptop | TBC | |
+| AT-01 | Unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed at that date; not re-run on Linux since (see AT-03) | 2026-11-17 |
+| AT-02 | Windows type check and clippy (`cargo clippy --target x86_64-pc-windows-msvc`) | Linux cloud workspace | No errors, no warnings at that date; not re-run since | 2026-11-17 |
+| AT-03 | Unit tests on Windows (`cargo test`) | maintainer's laptop, Rust 1.100.0 | 37 passed, 0 failed, 1 ignored (`export_logo`, asset build only). The Unix-only chain test is not compiled on Windows | 2026-11-17 |
 
 AT-02 checks the code compiles for Windows; it does not link or run it.
 
-## 2. Slice 1 manual checks (maintainer's laptop)
+## 2. Manual checks (maintainer's laptop)
 
 | ID | Check | Expected | Result |
 |---|---|---|---|
@@ -35,7 +35,7 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 | MT-15 | Light mode | Light pill, readable colours | Done by maintainer 2026-11-17 |
 | MT-16 | Real hook in Claude Code | Status bar shows Session/Weekly; pill updates after each reply | Pass: hook wrote snapshot.json at 11:02 am, 2026-11-17 |
 | MT-20 | install.ps1 on maintainer's laptop | Status line and Stop hook in settings.json; backup made; app starts | Pass 2026-11-17: both entries present, Stop stored as array |
-| MT-21 | Reply in VS Code extension, auto-refresh off | Pill turns grey; tooltip says "Used since" | TBC |
+| MT-21 | Reply in VS Code extension, auto-refresh off | Pill turns grey; tooltip says "Used since" | Pass (observed during MT-22 setup, 2026-11-17) |
 | MT-22 | Turn on auto-refresh, reply in VS Code extension | Impact dialog shown first; pill updates within ~10 s; menu shows 1 today and tokens | Pass 2026-11-17: pill 34% / 21% matched extension panel, green dot. Token count TBC |
 | MT-23 | Start with Windows on, sign out and in | TokenStat starts | TBC |
 | MT-24 | uninstall.ps1 | Settings restored; exe, data and Run entry gone | TBC |
@@ -44,11 +44,16 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 | MT-27 | All stats on, 10 min | tokenstat.exe under 1% CPU average, under 20 MB memory | TBC |
 | MT-19 | Live tray icon and tooltip | Rings readable on taskbar; tooltip shows both %, resets, as-of | Pass, maintainer screenshot 2026-11-17 |
 | MT-17 | Hook timing, 10 runs | Under 100 ms each | TBC |
-| MT-18 | Hide labels, restart | Pill shows "7% \| 16%", narrower; setting kept | TBC |
+| MT-18 | Hide labels, restart | Pill shows "7% \| 16%", narrower; setting kept | Pass (owner, 2026-11-17) |
+| MT-28 | Hide labels with system stats on | CPU, RAM, GPU words hidden too; network arrows stay | Pass (owner, 2026-11-17) |
+| MT-29 | install.ps1 Start menu shortcut and Apps entry | TokenStat in Start search with logo; listed in Settings > Apps | Pass (owner, 2026-11-17) |
+| MT-30 | Untick auto-refresh, use VS Code extension | No new refreshes; pill greys only | Code reviewed; owner confirmed behaviour expectation, not measured |
 
-## 3. Known gaps in slice 1
+## 3. Known gaps
 
-- Tray icon is the generic Windows application icon (T-06).
-- Reads the spike's `spike-snapshot.json`; the real hook comes in slice 2.
-- A partly written spike file can briefly show "Data error"; the atomic write in slice 2 removes this.
+Slice 1 gaps now closed: live tray icon (MT-19), real hook instead of the spike file (MT-16).
+
+- Atomic snapshot write (ADR-08) is built but not tested.
+- Hook timing (MT-17) and auto-refresh tokens per refresh (MT-22) not yet measured.
+- Chaining a previous status line is unit tested on Linux only; not yet tested on Windows.
 - Rounded corners may not apply to a frameless window; to be checked visually.

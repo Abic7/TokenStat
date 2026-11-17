@@ -80,8 +80,8 @@ The `rate_limits` status line field is documented for Pro and Max plans. It has 
 ## Install
 
 ```powershell
-git clone https://github.com/<you>/tokenstat.git
-cd tokenstat
+git clone https://github.com/Abic7/TokenStat.git
+cd TokenStat
 $env:CARGO_TARGET_DIR = "$env:LOCALAPPDATA\TokenStat-build"
 cargo build --release
 powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
