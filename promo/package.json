@@ -1,0 +1,15 @@
+{
+  "name": "tokenstat-promo",
+  "private": true,
+  "description": "Remotion source for the TokenStat README demo (assets/demo/promo.gif and promo.mp4)",
+  "scripts": {
+    "still": "remotion still src/index.jsx Promo out/still.png --frame=270",
+    "render": "remotion render src/index.jsx Promo out/promo.mp4 --codec=h264 --crf=18"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.544",
+    "react": "18",
+    "react-dom": "18",
+    "remotion": "4.0.544"
+  }
+}
