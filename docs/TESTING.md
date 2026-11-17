@@ -8,13 +8,13 @@ Purpose: What has been tested, how, and the results. Targets are in README (reso
 
 | ID | Test | Where run | Result | Date |
 |---|---|---|---|---|
-| AT-01 | Unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed | 2026-11-17 |
-| AT-02 | Windows type check and clippy (`cargo clippy --target x86_64-pc-windows-msvc`) | Linux cloud workspace | No errors, no warnings | 2026-11-17 |
+| AT-01 | Unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed at that date; not re-run on Linux since (see AT-03) | 2026-11-17 |
+| AT-02 | Windows type check and clippy (`cargo clippy --target x86_64-pc-windows-msvc`) | Linux cloud workspace | No errors, no warnings at that date; not re-run since | 2026-11-17 |
 | AT-03 | Unit tests on Windows (`cargo test`) | maintainer's laptop, Rust 1.100.0 | 37 passed, 0 failed, 1 ignored (`export_logo`, asset build only). The Unix-only chain test is not compiled on Windows | 2026-11-17 |
 
 AT-02 checks the code compiles for Windows; it does not link or run it.
 
-## 2. Slice 1 manual checks (maintainer's laptop)
+## 2. Manual checks (maintainer's laptop)
 
 | ID | Check | Expected | Result |
 |---|---|---|---|
@@ -51,8 +51,9 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 
 ## 3. Known gaps
 
-Slice 1 gaps now closed: live tray icon (MT-19), real hook instead of the spike file (MT-16), atomic snapshot write (T-05).
+Slice 1 gaps now closed: live tray icon (MT-19), real hook instead of the spike file (MT-16).
 
+- Atomic snapshot write (ADR-08) is built but not tested.
 - Hook timing (MT-17) and auto-refresh tokens per refresh (MT-22) not yet measured.
 - Chaining a previous status line is unit tested on Linux only; not yet tested on Windows.
 - Rounded corners may not apply to a frameless window; to be checked visually.
