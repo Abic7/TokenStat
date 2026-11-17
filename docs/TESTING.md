@@ -35,7 +35,7 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 | MT-15 | Light mode | Light pill, readable colours | Done by maintainer 2026-11-17 |
 | MT-16 | Real hook in Claude Code | Status bar shows Session/Weekly; pill updates after each reply | Pass: hook wrote snapshot.json at 11:02 am, 2026-11-17 |
 | MT-20 | install.ps1 on maintainer's laptop | Status line and Stop hook in settings.json; backup made; app starts | Pass 2026-11-17: both entries present, Stop stored as array |
-| MT-21 | Reply in VS Code extension, auto-refresh off | Pill turns grey; tooltip says "Used since" | TBC |
+| MT-21 | Reply in VS Code extension, auto-refresh off | Pill turns grey; tooltip says "Used since" | Pass (observed during MT-22 setup, 2026-11-17) |
 | MT-22 | Turn on auto-refresh, reply in VS Code extension | Impact dialog shown first; pill updates within ~10 s; menu shows 1 today and tokens | Pass 2026-11-17: pill 34% / 21% matched extension panel, green dot. Token count TBC |
 | MT-23 | Start with Windows on, sign out and in | TokenStat starts | TBC |
 | MT-24 | uninstall.ps1 | Settings restored; exe, data and Run entry gone | TBC |
@@ -44,7 +44,10 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 | MT-27 | All stats on, 10 min | tokenstat.exe under 1% CPU average, under 20 MB memory | TBC |
 | MT-19 | Live tray icon and tooltip | Rings readable on taskbar; tooltip shows both %, resets, as-of | Pass, maintainer screenshot 2026-11-17 |
 | MT-17 | Hook timing, 10 runs | Under 100 ms each | TBC |
-| MT-18 | Hide labels, restart | Pill shows "7% \| 16%", narrower; setting kept | TBC |
+| MT-18 | Hide labels, restart | Pill shows "7% \| 16%", narrower; setting kept | Pass (owner, 2026-11-17) |
+| MT-28 | Hide labels with system stats on | CPU, RAM, GPU words hidden too; network arrows stay | Pass (owner, 2026-11-17) |
+| MT-29 | install.ps1 Start menu shortcut and Apps entry | TokenStat in Start search with logo; listed in Settings > Apps | Pass (owner, 2026-11-17) |
+| MT-30 | Untick auto-refresh, use VS Code extension | No new refreshes; pill greys only | Code reviewed; owner confirmed behaviour expectation, not measured |
 
 ## 3. Known gaps in slice 1
 
