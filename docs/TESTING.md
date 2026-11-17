@@ -8,9 +8,9 @@ Purpose: What has been tested, how, and the results. Targets are in README (reso
 
 | ID | Test | Where run | Result | Date |
 |---|---|---|---|---|
-| AT-01 | 24 unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed | 2026-11-17 |
+| AT-01 | Unit tests (hook: keeps only rate_limits, no session/path leakage, write rules, chaining; labels on/off; plus): snapshot parsing (BOM, nulls, missing, clamping, bad reset, truncated, oversized) and view (live, stale, reset passed, amber/red, missing window, no file, no limits, data error, tooltip length) | Linux cloud workspace, Rust 1.97 | 16 passed | 2026-11-17 |
 | AT-02 | Windows type check and clippy (`cargo clippy --target x86_64-pc-windows-msvc`) | Linux cloud workspace | No errors, no warnings | 2026-11-17 |
-| AT-03 | Unit tests on Windows (`cargo test`) | maintainer's laptop | TBC | |
+| AT-03 | Unit tests on Windows (`cargo test`) | maintainer's laptop, Rust 1.100.0 | 37 passed, 0 failed, 1 ignored (`export_logo`, asset build only). The Unix-only chain test is not compiled on Windows | 2026-11-17 |
 
 AT-02 checks the code compiles for Windows; it does not link or run it.
 
@@ -49,9 +49,10 @@ AT-02 checks the code compiles for Windows; it does not link or run it.
 | MT-29 | install.ps1 Start menu shortcut and Apps entry | TokenStat in Start search with logo; listed in Settings > Apps | Pass (owner, 2026-11-17) |
 | MT-30 | Untick auto-refresh, use VS Code extension | No new refreshes; pill greys only | Code reviewed; owner confirmed behaviour expectation, not measured |
 
-## 3. Known gaps in slice 1
+## 3. Known gaps
 
-- Tray icon is the generic Windows application icon (T-06).
-- Reads the spike's `spike-snapshot.json`; the real hook comes in slice 2.
-- A partly written spike file can briefly show "Data error"; the atomic write in slice 2 removes this.
+Slice 1 gaps now closed: live tray icon (MT-19), real hook instead of the spike file (MT-16), atomic snapshot write (T-05).
+
+- Hook timing (MT-17) and auto-refresh tokens per refresh (MT-22) not yet measured.
+- Chaining a previous status line is unit tested on Linux only; not yet tested on Windows.
 - Rounded corners may not apply to a frameless window; to be checked visually.
